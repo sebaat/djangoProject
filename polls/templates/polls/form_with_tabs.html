@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Environment Creation</title>
+    <style>
+        input[type=text], textarea, input[type=password], select, option {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+    </style>
+    <style>
+        /* Style the tab */
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+        }
+
+        /* Style the buttons that are used to open the tab content */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+        }
+
+        /* Change background color of buttons on hover */
+        .tab button:hover {
+            background-color: #ddd;
+        }
+
+        /* Create an active/current tablink class */
+        .tab button.active {
+            background-color: #ccc;
+        }
+
+        /* Style the tab content */
+        .tabcontent {
+            display: none;
+            padding: 12px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+            scroll-behavior: smooth;
+            overflow-y: auto;
+            height: 500px;
+        }
+    </style>
+</head>
+<body>
+<form class="modal-content animate" method="post">
+    <div>
+        <label><b>Virtual Machine</b></label>
+        <input type="text" placeholder="Enter Virtual Machine ID" id="uname_1" name="uname" required>
+        <input type="text" placeholder="Enter Vagrant Box Name" id="uname_1" name="uname" required>
+        <input type="password" placeholder="Enter Password" id="uname_1" name="uname" required>
+
+
+        <div id="network">
+            <label><b>Network</b></label>
+            <button style="display: block" onclick="addNetwork(event)">add</button>
+            <div id="container" class="container">
+
+                <div id="tab" class="tab">
+                    <button class="tablinks" id="defaultOpen" onclick="openCity(event, 'London')">London</button>
+                </div>
+
+                <!-- Tab content -->
+                <div id="London" class="tabcontent ">
+                    <select>
+                        <option>public network</option>
+                        <option>privet network</option>
+                    </select>
+                    <select>
+                        <option>dhcp</option>
+                        <option>static</option>
+                    </select>
+                    <input type="text" placeholder="Enter the ip Address" id="uname_1" name="uname" required>
+                </div>
+            </div>
+        </div>
+
+        <label><b>Docker Provisioner</b></label>
+        <input type="text" placeholder="Enter Docker Image Name" id="uname_1" name="uname" required>
+        <input type="text" placeholder="Enter Container Name" id="uname_1" name="uname" required>
+        <input type="text" placeholder="Enter Docker Command" id="uname_1" name="uname" required>
+        <input type="text" placeholder="Enter Docker Args" id="uname_1" name="uname" required>
+        <label><b>Script Provisioner</b></label>
+        <textarea rows="8" style="resize: none">#!/bin/bash
+
+# some command
+        </textarea>
+        <label><b>Ansible Provisioner</b></label>
+        <textarea rows="8"></textarea>
+    </div>
+</form>
+</div>
+<script>
+    function addNetwork(event) {
+        // let parentNode = event.currentTarget.parentNode;
+        let parentNode = document.getElementById("network");
+        let nodeListElement = htmlToElements("<select>\n" +
+            "                <option>public network</option>\n" +
+            "                <option>privet network</option>\n" +
+            "            </select>\n" +
+            "            <select>\n" +
+            "                <option>dhcp</option>\n" +
+            "                <option>static</option>\n" +
+            "            </select>\n" +
+            "            <input type=\"text\" placeholder=\"Enter the ip Address\" id=\"uname_1\" name=\"uname\" required>");
+        nodeListElement.forEach(value => {
+            parentNode.appendChild(value);
+        })
+        parentNode.appendChild(event.currentTarget);
+    }
+
+    /**
+     * @param {String} HTML representing any number of sibling elements
+     * @return {NodeList}
+     */
+    function htmlToElements(html) {
+        let template = document.createElement('template');
+        template.innerHTML = html;
+        return template.content.childNodes;
+    }
+
+    function openCity(evt, cityName) {
+
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>
+</body>
+</html>

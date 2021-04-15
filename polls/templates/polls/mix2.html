@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        /* Full-width input fields */
+        input[type=text], textarea, input[type=password], select, option  {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        /* Set a style for all buttons */
+        .button1 {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .button1:hover {
+            opacity: 0.8;
+        }
+
+        /* Extra styles for the cancel button */
+        .cancelbtn {
+            width: auto;
+            padding: 10px 18px;
+            background-color: #f44336;
+        }
+
+        .addbtn {
+            width: auto;
+            padding: 10px 18px;
+            float: right;
+            background-color: #4CAF50;
+        }
+
+        .container {
+            padding: 16px;
+        }
+
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            /*overflow: auto; !* Enable scroll if needed *!*/
+            background-color: rgb(0, 0, 0); /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+            padding-top: 60px;
+            /*scroll-behavior: smooth;*/
+        }
+
+        /* Modal Content/Box */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+            /*height: 40%;*/
+        }
+
+        /* Add Zoom Animation */
+        .animate {
+            -webkit-animation: animatezoom 0.6s;
+            animation: animatezoom 0.6s
+        }
+
+        @-webkit-keyframes animatezoom {
+            from {
+                -webkit-transform: scale(0)
+            }
+            to {
+                -webkit-transform: scale(1)
+            }
+        }
+
+        @keyframes animatezoom {
+            from {
+                transform: scale(0)
+            }
+            to {
+                transform: scale(1)
+            }
+        }
+
+    </style>
+    <style>
+        /* Style the tab */
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+        }
+
+        /* Style the buttons that are used to open the tab content */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+        }
+
+        /* Change background color of buttons on hover */
+        .tab button:hover {
+            background-color: #ddd;
+        }
+
+        /* Create an active/current tablink class */
+        .tab button.active {
+            background-color: #ccc;
+        }
+
+        /* Style the tab content */
+        .tabcontent {
+            display: none;
+            padding: 12px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+            scroll-behavior: smooth;
+            overflow-y:auto;
+            height: 500px;
+        }
+    </style>
+    <title>Environment Creation</title>
+</head>
+<body>
+
+
+<h2>Create Virtual Environment</h2>
+
+<button class="button1" onclick="createButton()" style="width:auto;">Create</button>
+
+<div id="id01" class="modal">
+
+    <form class="modal-content animate" method="post">
+
+        <div id="container" class="container" >
+
+            <div id="tab" class="tab">
+                <button class="tablinks" id="defaultOpen" onclick="openCity(event, 'London')">London</button>
+            </div>
+
+            <!-- Tab content -->
+            <div id="London" class="tabcontent ">
+                <label for="uname_1"><b>Username</b></label>
+                <input type="text" placeholder="Enter Username" id="uname_1" name="uname" required>
+
+                <label for="psw_1"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" id="psw_1" name="psw" required>
+            </div>
+        </div>
+
+        <div class="container" style="background-color:#f1f1f1">
+            <button type="button" onclick="document.getElementById('id01').style.display='none'"
+                    class="button1 cancelbtn">
+                Cancel
+            </button>
+            <button type="button" onclick="addTab()" class="button1 addbtn">
+                Add
+            </button>
+        </div>
+    </form>
+</div>
+<script>
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+    let tabNumber = 1;
+
+    function openCity(evt, cityName) {
+
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+    function addTab() {
+        tabNumber++;
+        let parent = document.getElementById("tab");
+        let container = document.getElementById("container");
+        let tab = document.createElement("button");
+        let buttonName = "Tab" + tabNumber;
+        let textNode = document.createTextNode(buttonName);
+        tab.appendChild(textNode);
+        tab.className = "tablinks";
+        tab.onclick = (event) => {
+            openCity(event, buttonName);
+
+        };
+
+        defaultContent().forEach(value => {
+            container.appendChild(value);
+        });
+
+        parent.appendChild(tab);
+        tab.click();
+    }
+
+    /**
+     * @return {NodeList}
+     */
+    function defaultContent() {
+        let nodes = htmlToElements("<div id=\"" + "Tab" + tabNumber + "\" class=\"tabcontent \">\n" +
+            "<label><b>Virtual Machine</b></label>\n" +
+            "        <input type=\"text\" placeholder=\"Enter Virtual Machine ID\" id=\"uname_1\" name=\"uname\" required>\n" +
+            "        <input type=\"text\" placeholder=\"Enter Vagrant Box Name\" id=\"uname_1\" name=\"uname\" required>\n" +
+            "        <input type=\"password\" placeholder=\"Enter Password\" id=\"uname_1\" name=\"uname\" required>\n" +
+            "\n" +
+            "        <label><b>Network</b></label>\n" +
+            "        <select>\n" +
+            "            <option>public network</option>\n" +
+            "            <option>privet network</option>\n" +
+            "        </select>\n" +
+            "        <select>\n" +
+            "            <option>dhcp</option>\n" +
+            "            <option>static</option>\n" +
+            "        </select>\n" +
+            "        <input type=\"text\" placeholder=\"Enter the ip Address\" id=\"uname_1\" name=\"uname\" required>\n" +
+            "\n" +
+            "        <label><b>Docker Provisioner</b></label>\n" +
+            "        <input type=\"text\" placeholder=\"Enter Docker Image Name\" id=\"uname_1\" name=\"uname\" required>\n" +
+            "        <input type=\"text\" placeholder=\"Enter Container Name\" id=\"uname_1\" name=\"uname\" required>\n" +
+            "        <input type=\"text\" placeholder=\"Enter Docker Command\" id=\"uname_1\" name=\"uname\" required>\n" +
+            "        <input type=\"text\" placeholder=\"Enter Docker Args\" id=\"uname_1\" name=\"uname\" required>\n" +
+            "        <label><b>Script Provisioner</b></label>\n" +
+            "        <textarea rows=\"8\" style=\"resize: none\">#!/bin/bash\n" +
+            "\n" +
+            "# some command\n" +
+            "        </textarea>\n" +
+            "        <label><b>Ansible Provisioner</b></label>\n" +
+            "        <textarea rows=\"8\"></textarea>" +
+            "            </div>");
+
+        return nodes
+    }
+
+    /**
+     * @param {String} HTML representing any number of sibling elements
+     * @return {NodeList}
+     */
+    function htmlToElements(html) {
+        let template = document.createElement('template');
+        template.innerHTML = html;
+        return template.content.childNodes;
+    }
+
+    function createButton() {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].remove()
+            i--;
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].remove();
+            i--;
+        }
+        document.getElementById('id01').style.display = 'block';
+        tabNumber = 0;
+        addTab();
+    }
+
+</script>
+</body>
+</html>

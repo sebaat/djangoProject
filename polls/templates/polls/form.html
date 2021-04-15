@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Environment Creation</title>
+    <style>
+        input[type=text], textarea, input[type=password], select, option {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+<form class="modal-content animate" method="post">
+    <div>
+        <label><b>Virtual Machine</b></label>
+        <input type="text" placeholder="Enter Virtual Machine ID" id="uname_1" name="uname" required>
+        <input type="text" placeholder="Enter Vagrant Box Name" id="uname_1" name="uname" required>
+        <input type="password" placeholder="Enter Password" id="uname_1" name="uname" required>
+
+        <div id="network">
+            <label><b>Network</b></label>
+            <select>
+                <option>public network</option>
+                <option>privet network</option>
+            </select>
+            <select>
+                <option>dhcp</option>
+                <option>static</option>
+            </select>
+            <input type="text" placeholder="Enter the ip Address" id="uname_1" name="uname" required>
+            <button style="display: block" onclick="addNetwork(event)">add</button>
+        </div>
+
+        <label><b>Docker Provisioner</b></label>
+        <input type="text" placeholder="Enter Docker Image Name" id="uname_1" name="uname" required>
+        <input type="text" placeholder="Enter Container Name" id="uname_1" name="uname" required>
+        <input type="text" placeholder="Enter Docker Command" id="uname_1" name="uname" required>
+        <input type="text" placeholder="Enter Docker Args" id="uname_1" name="uname" required>
+        <label><b>Script Provisioner</b></label>
+        <textarea rows="8" style="resize: none">#!/bin/bash
+
+# some command
+        </textarea>
+        <label><b>Ansible Provisioner</b></label>
+        <textarea rows="8"></textarea>
+    </div>
+</form>
+</div>
+<script>
+    function addNetwork(event) {
+        // let parentNode = event.currentTarget.parentNode;
+        let parentNode = document.getElementById("network");
+        let nodeListElement = htmlToElements("<select>\n" +
+            "                <option>public network</option>\n" +
+            "                <option>privet network</option>\n" +
+            "            </select>\n" +
+            "            <select>\n" +
+            "                <option>dhcp</option>\n" +
+            "                <option>static</option>\n" +
+            "            </select>\n" +
+            "            <input type=\"text\" placeholder=\"Enter the ip Address\" id=\"uname_1\" name=\"uname\" required>");
+        nodeListElement.forEach(value => {
+            parentNode.appendChild(value);
+        })
+        parentNode.appendChild(event.currentTarget);
+    }
+
+    /**
+     * @param {String} HTML representing any number of sibling elements
+     * @return {NodeList}
+     */
+    function htmlToElements(html) {
+        let template = document.createElement('template');
+        template.innerHTML = html;
+        return template.content.childNodes;
+    }
+</script>
+</body>
+</html>
